@@ -22,6 +22,7 @@ export default function App() {
           <SafeAreaView>
             <ModelInfo description="Default (GPT-3.5)" />
             <ScrollView style={{ backgroundColor: '#343541', height: '100%' }}>
+              {/* Without this the TouchableWithoutFeedback does not allow scrolling  */}
               <View onStartShouldSetResponder={() => true}>
                 <Chat />
               </View>

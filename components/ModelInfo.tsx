@@ -8,7 +8,6 @@ export const ModelInfo: React.FC<ModelInfoProps> = ({ description }) => {
   return (
     <View
       style={{
-        display: 'flex',
         justifyContent: 'center',
         height: 60,
         backgroundColor: '#40414f',
