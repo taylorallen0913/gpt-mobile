@@ -12,7 +12,10 @@ export const Footer: React.FC<{}> = () => {
 
   const addMessage = async () => {
     // Add user message
-    dispatch({ type: 'add', message: { role: 'user', content: input } });
+    dispatch({ type: 'addMessage', message: { role: 'user', content: input } });
+
+    // Set assistant to be loading
+    dispatch({ type: 'setLoading' });
 
     // Make API call
     const completion = await getCompletion({
@@ -23,7 +26,7 @@ export const Footer: React.FC<{}> = () => {
           : { role: 'user', content: input },
     });
 
-    dispatch({ type: 'add', message: completion });
+    dispatch({ type: 'addMessage', message: completion });
   };
 
   return (
