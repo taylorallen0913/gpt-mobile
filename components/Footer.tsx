@@ -1,11 +1,30 @@
 import { useState } from 'react';
-import { View, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useChat } from '../context/chat-context';
+import { getCompletion } from '../util/openai';
 
 export const Footer: React.FC<{}> = () => {
-  const [input, onChangeInput] = useState<string>('');
+  const [input, setInput] = useState<string>('');
   const [inputOffset, setInputOffset] = useState<number>(0);
+  const { state, dispatch } = useChat();
+
+  const addMessage = async () => {
+    // Add user message
+    dispatch({ type: 'add', message: { role: 'user', content: input } });
+
+    // Make API call
+    const completion = await getCompletion({
+      model: 'gpt-3.5-turbo',
+      messages:
+        'messages' in state
+          ? [...state.messages, { role: 'user', content: input }]
+          : { role: 'user', content: input },
+    });
+
+    dispatch({ type: 'add', message: completion });
+  };
 
   return (
     <View
@@ -34,7 +53,7 @@ export const Footer: React.FC<{}> = () => {
             const { height } = event.nativeEvent.layout;
             setInputOffset(height);
           }}
-          onChangeText={onChangeInput}
+          onChangeText={setInput}
           placeholder="Send a message..."
           placeholderTextColor="#9ca3af"
           style={{
@@ -48,7 +67,13 @@ export const Footer: React.FC<{}> = () => {
             borderRadius: 10,
           }}
         />
-        <TouchableWithoutFeedback onPress={() => alert('Message Sent!')}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            addMessage();
+            setInput('');
+            Keyboard.dismiss();
+          }}
+        >
           <View
             style={{
               width: '12%',
