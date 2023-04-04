@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { View, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { View, TouchableWithoutFeedback } from 'react-native';
+import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export const Footer: React.FC<{}> = () => {
   const [input, onChangeInput] = useState<string>('');
+  const [inputOffset, setInputOffset] = useState<number>(0);
 
   return (
     <View
       style={{
-        height: 120,
+        height: 80 + inputOffset > 250 ? 250 : 80 + inputOffset,
         alignItems: 'center',
         backgroundColor: '#343541',
         marginTop: 'auto',
@@ -25,18 +27,26 @@ export const Footer: React.FC<{}> = () => {
           borderRadius: 10,
         }}
       >
-        <TextInput
+        <AutoGrowingTextInput
+          value={input}
+          maxHeight={200}
+          onLayout={(event) => {
+            const { height } = event.nativeEvent.layout;
+            setInputOffset(height);
+          }}
+          onChangeText={onChangeInput}
+          placeholder="Send a message..."
+          placeholderTextColor="#9ca3af"
           style={{
+            fontSize: 17,
             color: 'white',
             backgroundColor: '#40414f',
             width: '88%',
             height: '100%',
-            padding: 15,
+            padding: '5%',
+            paddingTop: '5%',
             borderRadius: 10,
           }}
-          onChangeText={onChangeInput}
-          value={input}
-          placeholder="Send a message..."
         />
         <TouchableWithoutFeedback onPress={() => alert('Message Sent!')}>
           <View

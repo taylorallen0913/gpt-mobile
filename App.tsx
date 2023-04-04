@@ -14,7 +14,7 @@ import { ModelInfo } from './components/ModelInfo';
 export default function App() {
   return (
     <KeyboardAvoidingView
-      style={{ backgroundColor: '#343541' }}
+      style={{ backgroundColor: '#343541', flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
