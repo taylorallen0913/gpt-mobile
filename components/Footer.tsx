@@ -73,9 +73,11 @@ export const Footer: React.FC<{}> = () => {
         />
         <TouchableWithoutFeedback
           onPress={() => {
-            setInput('');
-            addMessage();
-            Keyboard.dismiss();
+            if (input !== '') {
+              setInput('');
+              addMessage();
+              Keyboard.dismiss();
+            }
           }}
         >
           <View
