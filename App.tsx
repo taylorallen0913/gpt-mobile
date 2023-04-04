@@ -1,18 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import { Chat } from './components/Chat';
+import { Footer } from './components/Footer';
+import { ModelInfo } from './components/ModelInfo';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <KeyboardAvoidingView
+      style={{ backgroundColor: '#343541' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
+          <SafeAreaView>
+            <ModelInfo description="Default (GPT-3.5)" />
+            <ScrollView style={{ backgroundColor: '#343541', height: '100%' }}>
+              <View onStartShouldSetResponder={() => true}>
+                <Chat />
+              </View>
+            </ScrollView>
+          </SafeAreaView>
+          <Footer />
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
