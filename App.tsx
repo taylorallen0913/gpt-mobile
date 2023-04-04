@@ -19,13 +19,11 @@ export default function App() {
         style={{ backgroundColor: '#343541', flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View>
-          <SafeAreaView>
-            <ModelInfo description="GPT-4" />
-            <Chat />
-          </SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
+          <ModelInfo description="GPT-4" />
+          <Chat />
           <Footer />
-        </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     </ChatProvider>
   );

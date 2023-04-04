@@ -32,13 +32,13 @@ export const Footer: React.FC<{}> = () => {
   return (
     <View
       style={{
-        height: 80 + inputOffset > 250 ? 250 : 80 + inputOffset,
+        height: 80 + inputOffset > 300 ? 300 : 80 + inputOffset,
         alignItems: 'center',
         backgroundColor: '#343541',
         marginTop: 'auto',
         borderTopColor: 'gray',
         borderTopWidth: 0.5,
-        paddingTop: 15,
+        paddingTop: 20,
       }}
     >
       <View
@@ -47,11 +47,12 @@ export const Footer: React.FC<{}> = () => {
           flexDirection: 'row',
           backgroundColor: '#40414f',
           borderRadius: 10,
+          marginTop: 0,
         }}
       >
         <AutoGrowingTextInput
           value={input}
-          maxHeight={200}
+          maxHeight={300}
           onLayout={(event) => {
             const { height } = event.nativeEvent.layout;
             setInputOffset(height);
@@ -72,8 +73,8 @@ export const Footer: React.FC<{}> = () => {
         />
         <TouchableWithoutFeedback
           onPress={() => {
-            addMessage();
             setInput('');
+            addMessage();
             Keyboard.dismiss();
           }}
         >

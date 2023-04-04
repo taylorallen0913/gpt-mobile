@@ -9,12 +9,16 @@ export const Chat: React.FC<{}> = () => {
 
   useEffect(() => {
     if (flatListRef.current && state.messages.length > 0) {
-      flatListRef.current.scrollToEnd({ animated: true });
+      // Set timeout so scrolling to bottom does not bug out
+      setTimeout(
+        () => flatListRef.current.scrollToEnd({ animated: true }),
+        300,
+      );
     }
   }, [state.messages]);
 
   return (
-    <View style={{ height: '100%', paddingBottom: 250 }}>
+    <View style={{ flex: 1 }}>
       <FlatList
         ref={flatListRef}
         data={
@@ -22,8 +26,8 @@ export const Chat: React.FC<{}> = () => {
             ? state.messages
             : [...state.messages, { role: 'loading', content: '...' }]
         }
-        keyExtractor={({ content }) => {
-          return content;
+        keyExtractor={(i, j) => {
+          return i + j;
         }}
         renderItem={({ item }) => {
           return (

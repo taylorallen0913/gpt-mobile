@@ -18,7 +18,8 @@ const getRandomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const mockAPIData = (sentences: number): string => {
+// Mock data in development so we don't have to hit the api
+export const mockAPIData = (sentences: number): string => {
   const lorem = new LoremIpsum({
     sentencesPerParagraph: {
       max: 8,
