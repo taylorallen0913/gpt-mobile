@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Platform,
-  Keyboard,
-} from 'react-native';
+import { View, TextInput } from 'react-native';
 
 export const Footer: React.FC<{}> = () => {
   const [input, onChangeInput] = useState<string>('');
