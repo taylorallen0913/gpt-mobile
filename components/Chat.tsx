@@ -54,6 +54,7 @@ export const Chat: React.FC<{}> = () => {
                   color: 'white',
                   fontSize: 15,
                   paddingHorizontal: 15,
+                  lineHeight: 25,
                 }}
               >
                 {item.content}
