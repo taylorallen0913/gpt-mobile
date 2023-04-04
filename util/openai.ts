@@ -1,4 +1,5 @@
 import { Configuration, OpenAIApi } from 'openai';
+import { LoremIpsum } from 'lorem-ipsum';
 import { OPENAI_API_KEY } from '@env';
 
 export interface ChatMessage {
@@ -11,7 +12,33 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export const getCompletion = async ({ model, messages }) => {
+const getRandomInt = (min: number, max: number): number => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+const mockAPIData = (sentences: number): string => {
+  const lorem = new LoremIpsum({
+    sentencesPerParagraph: {
+      max: 8,
+      min: 4,
+    },
+    wordsPerSentence: {
+      max: 16,
+      min: 4,
+    },
+  });
+  return lorem.generateSentences(sentences);
+};
+
+export const getCompletion = async ({
+  model,
+  messages,
+}): Promise<ChatMessage> => {
+  if (__DEV__) {
+    return { role: 'assistant', content: mockAPIData(getRandomInt(5, 10)) };
+  }
   const completion = await openai.createChatCompletion({
     model,
     messages,
